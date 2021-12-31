@@ -1,22 +1,35 @@
 #include <iostream>
-#include "myList.h"
+#include "List.h"
+// #include "oldList.h"
 using namespace std;
 
 int main(void)
 {
     cout << "Double Linked Sample code" << endl;
-    old::List<int> oldList;
+    homework::List<int> listDesc;
+    homework::List<int> listAsc;
     for (int i = 0; i < 10; i++)
     {
-        oldList.addFront(i);
+        listDesc.addFront(i);
+        listAsc.addLast(i);
     }
 
-    if(!oldList.chkEmpty()) {
-        oldList.moveFront();
-        do {
-            cout << oldList.getValue() << " ";
-        } while (oldList.moveNext());
+    if(listDesc.chkEmpty() || listAsc.chkEmpty()) {
+        cout << "input data fail" << endl;
+        return 0;
     }
+
+    listAsc.moveFront();
+    do {
+        cout << listAsc.getValue() << " ";
+    } while (listAsc.moveNext());
     cout << endl;
+
+    listDesc.moveLast();
+    do {
+        cout << listDesc.getValue() << " ";
+    } while (listDesc.movePrev());
+    cout << endl;
+    
     return 0;
 }
