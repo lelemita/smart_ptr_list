@@ -5,9 +5,8 @@ project(
     LANGUAGES CXX
 )
 
-add_executable(${PROJECT_NAME} 
+add_executable(${PROJECT_NAME}
     main.cpp
-    myList.h
 )
 
 set_target_properties(${PROJECT_NAME}

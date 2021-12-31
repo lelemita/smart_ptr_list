@@ -1,9 +1,8 @@
 #pragma once
-#include <memory>
 #include <iostream>
 using namespace std;
 
-namespace old
+namespace homework
 {
     template <class T> struct Node
     {
@@ -33,7 +32,6 @@ namespace old
 
             void addFront(const T &value);
             void addLast(const T &value);
-            void removeFront();
             void moveFront() { pCurr = head; }
             void moveLast() { pCurr = tail; }
             bool moveNext();
@@ -85,16 +83,6 @@ namespace old
         if (head == NULL) {
             head = tail;
         }
-    }
-
-    template<class T> void List<T>::removeFront()
-    {
-        Node<T> *temp = head;
-        if (pCurr == head) {
-            pCurr = head->next;
-        }
-        head = head->next;
-        delete temp;
     }
 
     template<class T> bool List<T>::moveNext()
