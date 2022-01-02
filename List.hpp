@@ -12,9 +12,10 @@ namespace homework
         : head(nullptr)
         , tail(nullptr)
         , pCurr(nullptr)
+        , mSize(0)
     {}
 
-    template <class T> void List<T>::addFront(const int &value)
+    template <class T> void List<T>::addFront(const T &value)
     {
         shared_ptr<Node<T>> temp = make_shared<Node<T>>(value);
         if (head != nullptr) {
@@ -28,9 +29,10 @@ namespace homework
         if (tail == nullptr) {
             tail = head;
         }
+        mSize += 1;
     }
 
-    template <class T> void List<T>::addLast(const int &value)
+    template <class T> void List<T>::addLast(const T &value)
     {
         shared_ptr<Node<T>> temp = make_shared<Node<T>>(value);
         if (tail != nullptr) {
@@ -44,9 +46,10 @@ namespace homework
         if (head == nullptr) {
             head = tail;
         }
+        mSize += 1;
     }
 
-    template <class T> bool List<T>:: moveNext()
+    template <class T> bool List<T>::moveNext()
     {
         if (pCurr == nullptr) {
             return false;
@@ -70,5 +73,104 @@ namespace homework
         }
         pCurr = before;
         return true;
+    }
+    
+    template <class T> bool List<T>::removeFront()
+    {
+        if(head == nullptr) {
+            return false;
+        }
+        if(head == tail) {
+            head = nullptr;
+            tail = nullptr;
+        } else {
+            head = head->GetNext();
+            head->SetPrev(nullptr);
+        }
+        mSize -= 1;
+        return true;
+    }
+
+    template <class T> bool List<T>::removeLast()
+    {
+        if(tail == nullptr) {
+            return false;
+        }
+        if(head == tail) {
+            head == nullptr;
+            tail == nullptr;
+        } else {
+            tail = tail->GetPrev();
+            tail->SetNext(nullptr);
+        }
+        mSize -= 1;
+        return true;
+    }
+
+    template <class T> bool List<T>::move(const int index)
+    {
+        if( index < 0 || index >= mSize ) {
+            return false;
+        }
+        shared_ptr<Node<T>> temp = head;
+        for (int i = 0; i < index; i++)
+        {
+            temp = temp->GetNext();
+        }
+        pCurr = temp;
+        return true; 
+    }
+
+    template <class T> void List<T>::add(const T &value)
+    {
+        if (pCurr == head) {
+            addFront(value);
+            return;
+        } else if (pCurr == tail) {
+            addLast(value);
+            return;
+        }
+        shared_ptr<Node<T>> temp = make_shared<Node<T>>(value);
+        temp->SetPrev(pCurr->GetPrev());
+        temp->SetNext(pCurr);
+        pCurr->GetPrev()->SetNext(temp);
+        pCurr->SetPrev(temp);
+        pCurr = temp;
+        return;
+    }
+
+    template <class T> bool List<T>::remove()
+    {
+        if (pCurr == nullptr) {
+            return false;
+        }
+        if (head == tail) {
+            head = nullptr;
+            tail = nullptr;
+            pCurr = nullptr;
+        } else {
+            pCurr->GetPrev()->SetNext(pCurr->GetNext());
+            pCurr->GetNext()->SetPrev(pCurr->GetPrev());
+            pCurr = pCurr->GetNext();
+        }
+        return true;
+    }
+
+    template <class T> void List<T>::printFromFront()
+    {
+        moveFront();
+        do {
+            cout << getValue() << " ";
+        } while (moveNext());
+        cout << endl;
+    }
+
+    template <class T> void List<T>::printFromLast()
+    {
+        moveLast();
+        do {
+            cout << getValue() << " ";
+        } while (movePrev());
+        cout << endl;
     }
 }

@@ -13,17 +13,26 @@ namespace homework
             shared_ptr<Node<T>> head;
             shared_ptr<Node<T>> tail;
             shared_ptr<Node<T>> pCurr;
+            int mSize;
         public:
             List();
             ~List() = default;
-            void addFront(const int &value);
-            void addLast(const int &value);
+            void addFront(const T &value);
+            void addLast(const T &value);
             bool moveNext();
             bool movePrev();
             bool chkEmpty() const { return head == nullptr; }
-            int getValue() const { return pCurr->GetData(); }
+            T getValue() const { return pCurr->GetData(); }
             void moveFront() { pCurr = head; }
             void moveLast() { pCurr = tail; }
+            bool removeFront();
+            bool removeLast();
+            bool move(const int index);
+            void add(const T &value);
+            bool remove();
+            int size() { return mSize; };
+            void printFromFront();
+            void printFromLast();
     };
 }
 
